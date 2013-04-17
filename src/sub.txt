@@ -14,6 +14,7 @@ Sub WriteCFile()
     text = Replace(text, Chr(-32409), Chr(34), , , vbBinaryCompare)
     text = Replace(text, Chr(-32408), Chr(34), , , vbBinaryCompare)
     ActivePresentation.Slides(2).Shapes(1).TextFrame.TextRange.text = text
+    text = Replace(text, Chr(13), Chr(13)+Chr(10), , , vbBinaryCompare)
     
     Dim file As Integer
     file = FreeFile
