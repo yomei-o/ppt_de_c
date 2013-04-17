@@ -1,0 +1,46 @@
+Sub CreateDirectory()
+    On Error Resume Next
+    MkDir ("include")
+    MkDir ("lib")
+    On Error GoTo 0
+End Sub
+
+Sub WriteCFile()
+        
+    Dim text As String
+    text = ActivePresentation.Slides(2).Shapes(1).TextFrame.TextRange.text
+    text = Replace(text, Chr(-32411), Chr(39), , , vbBinaryCompare)
+    text = Replace(text, Chr(-32410), Chr(39), , , vbBinaryCompare)
+    text = Replace(text, Chr(-32409), Chr(34), , , vbBinaryCompare)
+    text = Replace(text, Chr(-32408), Chr(34), , , vbBinaryCompare)
+    ActivePresentation.Slides(2).Shapes(1).TextFrame.TextRange.text = text
+    
+    Dim file As Integer
+    file = FreeFile
+    Open "testmain.c" For Output As #file
+    Print #file, text
+    Close #file
+        
+End Sub
+
+Sub DoCompile()
+    CreateDirectory
+    WriteCFile
+    WriteFile_tcc
+    WriteFile_libtcc
+    WriteFile_docompile
+    WriteFile_lib_libtcc1
+    WriteFile_include__mingw
+    WriteFile_include_limits
+    WriteFile_include_malloc
+    WriteFile_include_stdarg
+    WriteFile_include_stddef
+    WriteFile_include_string
+    WriteFile_include_stdio
+    WriteFile_include_stdlib
+    WriteFile_include_vadefs
+    WriteFile_include_float
+    WriteFile_include_math
+    Shell ("docompile.bat")
+End Sub
+
