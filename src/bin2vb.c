@@ -60,24 +60,28 @@ int main(int argc,char* argv[])
 		printf("Dim a(0 To %d) As Byte\n",no-1);
 		
 		for(i=0;i<no;i++){
+			if(i%8==0)printf("    ");
 			printf("a(%d)=%d",i,p[ss*j+i]);
 			if(i%8==7)printf("\n");
 			else printf(": ");
 		}
 		printf("\n");
-    	printf("Dim file As Integer\n");
-	    printf("file = FreeFile\n");
-    	printf("Open \"%s\" For Binary As #file\n",arg_name);
-	    printf("Put #file,%d , a\n",j*ss+1);
-    	printf("Close #file\n");
+    	printf("    Dim file As Integer\n");
+	    printf("    file = FreeFile\n");
+    	printf("    Open \"%s\" For Binary As #file\n",arg_name);
+	    printf("    Put #file,%d , a\n",j*ss+1);
+    	printf("    Close #file\n");
 	 	printf("\n");
  	
 		printf("End Sub\n\n");	
 	}
 	printf("Sub WriteFile_%s\n",name);
+	printf("    On Error Resume Next\n");
+	printf("    Kill \"%s\"\n",arg_name);
 	for(j=0;j<ct;j++){
-		printf("WriteFile_%s_%d\n",name,j);
+		printf("    WriteFile_%s_%d\n",name,j);
 	}
+	printf("    On Error GoTo 0\n");
 	printf("End Sub\n\n");	
 
 		
